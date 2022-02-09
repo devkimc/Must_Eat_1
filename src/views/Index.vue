@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <div id="page-top">
-        <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
-      </div>
+        <!-- Map-->
+        <div class="map" id="contact">
+          <div id="map" style="width:700px;height:500px;"></div>
+        </div>
     <router-view/>
   </div>
 </template>
