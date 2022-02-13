@@ -2,8 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/views/Index'
 import Login from '@/views/auth/Login'
-import Main from '@/views/main/Main'
-import HelloWorld from '@/components/HelloWorld'
+import RegistRest from '@/views/management/RegistRest'
+import IndexMap from '@/views/map/IndexMap'
 
 Vue.use(Router)
 
@@ -21,14 +21,14 @@ export default new Router({
       component: Login
     },
     {
-      path: '/main',
-      name: 'Main',
-      component: Main
+      path: '/management/registrest',
+      name: 'RegistRest',
+      component: RegistRest
     },
     {
-      path: '/hello',
-      name: 'HelloWorld',
-      component: HelloWorld
+      path: '/map/indexmap',
+      name: 'RegistRest',
+      component: IndexMap
     }
   ]
 })

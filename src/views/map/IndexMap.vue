@@ -9,7 +9,7 @@
 import jeongdae36 from '@/assets/img/jeongdae36.jpg'
 
 export default {
-  name: 'Map',
+  name: 'IndexMap',
   data () {
     return {
       apiKey: ''

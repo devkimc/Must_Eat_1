@@ -1,0 +1,30 @@
+<template>
+  <div class='layout_nav'>
+  <b-nav tabs align='right'>
+    <b-nav-item href="/">Home</b-nav-item>
+    <b-nav-item href="/auth/login">Login</b-nav-item>
+    <b-nav-item href="/map/indexmap">Map</b-nav-item>
+    <b-nav-item href="/management/registrest">Regist</b-nav-item>
+  </b-nav>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Nav',
+  data () {
+    return {
+      width: '500px',
+      path: ''
+    }
+  },
+  created () {
+    const originPath = this.$router.history.current.path
+    this.path = originPath
+  }
+}
+</script>
+
+<style>
+
+</style>

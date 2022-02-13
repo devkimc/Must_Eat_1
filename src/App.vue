@@ -1,13 +1,21 @@
 <template>
   <div id="app">
-      <router-view/>
+    <nav-view></nav-view>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+import NavView from '@/layouts/Nav'
 
 export default {
-  name: 'App'
+
+  name: 'App',
+  components: {
+    NavView
+  },
+  methods: {
+  }
 }
 </script>
 
