@@ -16,19 +16,3 @@ export const axiosPost = (url, params) => {
       })
   })
 }
-
-export const axiosGet = (url, resType) => {
-  return new Promise(function (resolve, reject) {
-    axios({
-      method: 'GET',
-      url: host + url,
-      responseType: resType
-    })
-      .then(response => {
-        resolve(response)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  })
-}
