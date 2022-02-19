@@ -6,5 +6,6 @@ const env = dotenv.config().parsed
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  VUE_APP_LOCAL_API_KEY: JSON.stringify(env.VUE_APP_LOCAL_API_KEY)
+  API_KEY_KAKAO_MAP: JSON.stringify(env.API_KEY_KAKAO_MAP_LOCAL),
+  R_URL: JSON.stringify(env.R_URL_LOCAL)
 })

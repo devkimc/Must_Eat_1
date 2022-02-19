@@ -16,13 +16,7 @@ export default {
   },
   mounted () {
     // Set api_key for kakao map
-    if (process.env.NODE_ENV === 'development') {
-      this.apiKey = process.env.VUE_APP_LOCAL_API_KEY
-    } else if (process.env.NODE_ENV === 'production') {
-      this.apiKey = process.env.VUE_APP_PROD_API_KEY
-    } else {
-      alert('카카오 맵 api_key 에러!')
-    }
+    this.apiKey = process.env.API_KEY_KAKAO_MAP
 
     // Show kakao map
     if (window.kakao && window.kakao.maps) {
