@@ -1,0 +1,11 @@
+.map #map {
+    width: 80%;
+    height: 700px;
+}
+
+@media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .map #map {
+        width: 100%;
+        height: 700px;
+    }
+}
