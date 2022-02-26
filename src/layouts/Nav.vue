@@ -1,11 +1,11 @@
 <template>
   <div class='layout_nav'>
-  <b-nav tabs align='right'>
-    <b-nav-item href="/">Home</b-nav-item>
-    <b-nav-item href="/auth/login">Login</b-nav-item>
-    <b-nav-item href="/map/indexmap">Map</b-nav-item>
-    <b-nav-item href="/management/registrest">Management</b-nav-item>
-  </b-nav>
+    <b-nav tabs align='right'>
+      <b-nav-item href="/">Home</b-nav-item>
+      <b-nav-item href="/auth/login">Login</b-nav-item>
+      <b-nav-item href="/map/indexmap">Map</b-nav-item>
+      <b-nav-item href="/management/registrest">Management</b-nav-item>
+    </b-nav>
   </div>
 </template>
 

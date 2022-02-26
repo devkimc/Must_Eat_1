@@ -1,7 +1,29 @@
 <template>
   <!-- Map-->
-  <div class="map" id="contact">
+  <div class="indexmap_view">
     <div id="map"></div>
+    <b-card class="card">
+      <b-row class="row_input">
+        <b-col>
+          <b-form-input placeholder='식당 이름' v-model="restNm"></b-form-input>
+        </b-col>
+      </b-row>
+      <b-row class="row_input">
+        <b-col>
+          <b-form-input placeholder='음식 구분' v-model="foodTp"></b-form-input>
+        </b-col>
+      </b-row>
+      <b-row class="row_input">
+        <b-col>
+          <b-form-input placeholder='대표 메뉴' v-model="MainMn"></b-form-input>
+        </b-col>
+      </b-row>
+      <b-row class="row_button">
+        <b-col>
+          <b-button block variant="primary">추가하기</b-button>
+        </b-col>
+      </b-row>
+    </b-card>
   </div>
 </template>
 
@@ -11,6 +33,14 @@ export default {
   name: 'IndexMap',
   data () {
     return {
+      restNm: '',
+      foodTp: '',
+      MainMn: '',
+      map: '',
+      markers: [],
+      latLng: '',
+      latCdnt: '',
+      lngCdnt: '',
       apiKey: ''
     }
   },
@@ -37,18 +67,20 @@ export default {
         center: new window.kakao.maps.LatLng(33.497118, 126.530588),
         level: 2
       }
-      const map = new window.kakao.maps.Map(container, options)
-
-      // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-      const markerPosition = new window.kakao.maps.LatLng(33.497118, 126.530588)
-
-      // 마커를 생성합니다
-      const marker = new window.kakao.maps.Marker({
-        position: markerPosition
+      this.map = new window.kakao.maps.Map(container, options)
+      window.kakao.maps.event.addListener(this.map, 'click', mouseEvent => {
+        this.addMarker(mouseEvent.latLng)
+        const latLng = mouseEvent.latLng
+        this.latCdnt = latLng.getLat()
+        this.lngCdnt = latLng.getLng()
       })
-
-      // 마커가 지도 위에 표시되도록 설정합니다
-      marker.setMap(map)
+    },
+    addMarker (position) {
+      const marker = new kakao.maps.Marker({
+        position: position
+      })
+      marker.setMap(this.map)
+      this.markers.push(marker)
     }
   }
 }

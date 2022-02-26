@@ -1,5 +1,5 @@
 <template>
-  <div class="login_views" align="center">
+  <div class="login_view" align="center">
     <b-container fluid class="cont">
       <div class="head">
         Must Eat
