@@ -1,10 +1,27 @@
 <template>
-  <div class="login_views">
-    <b-col sm="3">
-      <b-form-input size='sm' placeholder='id' v-model="userId"></b-form-input>
-      <b-form-input size='sm' placeholder='pw' v-model="userPw"></b-form-input>
-      <b-button variant="outline-primary" @click="goLogin" class="mb-2">Login</b-button>
-    </b-col>
+  <div class="login_views" align="center">
+    <b-container fluid class="cont">
+      <div class="head">
+        Must Eat
+      </div>
+      <b-card class="card">
+        <b-row class="row_input">
+          <b-col>
+            <b-form-input placeholder='아이디' v-model="userId"></b-form-input>
+          </b-col>
+        </b-row>
+        <b-row class="row_input">
+          <b-col>
+            <b-form-input placeholder='비밀번호' v-model="userPw"></b-form-input>
+          </b-col>
+        </b-row>
+        <b-row class="row_button">
+          <b-col>
+            <b-button block variant="primary" @click="goLogin">Login</b-button>
+          </b-col>
+        </b-row>
+      </b-card>
+    </b-container>
   </div>
 </template>
 
@@ -16,17 +33,26 @@ export default {
   data () {
     return {
       userId: '',
-      userPw: ''
+      userPw: '',
+      resMsgLogin: ''
     }
   },
   methods: {
     goLogin () {
-      Login(this.userId, this.userPw).then()
-      this.makeToast('success')
+      Login(this.userId, this.userPw).then(res => {
+        this.resMsgLogin = res.data.msg
+        if (res.data.code === 10000) {
+          this.makeToast('success')
+        } else if (res.data.code === 20001) {
+          this.makeToast('danger')
+        } else {
+          this.makeToast('warning')
+        }
+      })
     },
-    makeToast (variant = null) {
-      this.$bvToast.toast('Toast body content', {
-        title: `Variant ${variant || 'default'}`,
+    makeToast (variant) {
+      this.$bvToast.toast(this.resMsgLogin, {
+        title: 'Notice',
         variant: variant,
         solid: true
       })
