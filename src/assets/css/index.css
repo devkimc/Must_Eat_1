@@ -31,6 +31,11 @@
     width: 20%;
 }
 
+.indexmap_view .card .row_list_group {
+    height: 800px;
+    overflow-y: scroll;
+}
+
 @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
     .indexmap_view #map {
         width: 100%;
@@ -43,5 +48,10 @@
 
     .indexmap_view .card {
         width: 100%;
+    }
+
+    .indexmap_view .card .row_list_group {
+        height: 400px;
+        overflow-y: scroll;
     }
 }

@@ -27,34 +27,26 @@
 
 <script>
 import { Login } from '@/api/auth'
+import { showToast } from '@/plugins/toast'
 
 export default {
   name: 'Login',
   data () {
     return {
       userId: '',
-      userPw: '',
-      resMsgLogin: ''
+      userPw: ''
     }
   },
   methods: {
     goLogin () {
       Login(this.userId, this.userPw).then(res => {
-        this.resMsgLogin = res.data.msg
         if (res.data.code === 10000) {
-          this.makeToast('success')
+          showToast('success', res.data.msg)
         } else if (res.data.code === 20001) {
-          this.makeToast('danger')
+          showToast('danger', res.data.msg)
         } else {
-          this.makeToast('warning')
+          showToast('warning', res.data.msg)
         }
-      })
-    },
-    makeToast (variant) {
-      this.$bvToast.toast(this.resMsgLogin, {
-        title: 'Notice',
-        variant: variant,
-        solid: true
       })
     }
   }
