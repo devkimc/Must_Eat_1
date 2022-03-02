@@ -15,7 +15,7 @@
       <b-row v-if="resSearch.length !== 0" class="row_list_group">
         <b-col>
           <b-list-group v-for="(item, index) in resSearch" :key="index">
-            <b-list-group-item button>
+            <b-list-group-item button @click="setCenter(index)">
               <h5>
                 {{item.place_name}}
               </h5>
@@ -41,11 +41,12 @@ export default {
       // search
       restNm: '',
       searchOptions: {
-        category_group_code: 'FD6',
+        category_group_code: '',
         location: ''
       },
       resSearch: [],
       resMsgSearch: '',
+
       // map
       map: '',
       markers: [],
@@ -53,15 +54,23 @@ export default {
         center: '',
         level: ''
       },
+      initLatCdnt: 0,
+      initLngCdnt: 0,
       latLng: '',
+
       // api
       apiKey: '',
-      apiUrl: 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=',
-      apiServices: '&libraries=services'
+      apiUrl: '',
+      apiServices: ''
     }
   },
   created () {
+    this.initLatCdnt = 37.55108043514493
+    this.initLngCdnt = 126.86483931801229
     this.apiKey = process.env.API_KEY_KAKAO_MAP
+    this.apiUrl = 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey='
+    this.apiServices = '&libraries=services'
+    this.searchOptions.category_group_code = 'FD6'
   },
   mounted () {
     /* global kakao */
@@ -78,20 +87,22 @@ export default {
     initMap () {
       const container = document.getElementById('map')
       this.mapOptions = {
-        center: new kakao.maps.LatLng(37.55108043514493, 126.86483931801229),
-        level: 2
+        center: new kakao.maps.LatLng(this.initLatCdnt, this.initLngCdnt),
+        level: 3
       }
       this.map = new kakao.maps.Map(container, this.mapOptions)
     },
+
     keywordSearch () {
-      this.setMarkers(null)
+      this.hideMarker()
       const places = new kakao.maps.services.Places()
       const callback = (res, status) => {
         const resStatus = kakao.maps.services.Status
         if (status === resStatus.OK) {
           this.resSearch = res
+          this.setCenter(0)
           for (let i = 0; i < res.length; i++) {
-            this.displayMarker(res[i])
+            this.showMarker(res[i])
           }
           showToast('success', `${res.length} 건의 검색결과가 있습니다.`)
         } else if (status === resStatus.ZERO_RESULT) {
@@ -103,17 +114,23 @@ export default {
       this.searchOptions.location = this.mapOptions.center
       places.keywordSearch(this.restNm, callback, this.searchOptions)
     },
-    displayMarker (place) {
+
+    showMarker (place) {
       const marker = new kakao.maps.Marker({
         position: new kakao.maps.LatLng(place.y, place.x)
       })
       marker.setMap(this.map)
       this.markers.push(marker)
     },
-    setMarkers (map) {
+
+    hideMarker () {
       for (let i = 0; i < this.markers.length; i++) {
-        this.markers[i].setMap(map)
+        this.markers[i].setMap(null)
       }
+    },
+
+    setCenter (index) {
+      this.map.setCenter(new kakao.maps.LatLng(this.resSearch[index].y, this.resSearch[index].x))
     }
   }
 }
