@@ -48,6 +48,7 @@ export default {
       resMsgSearch: '',
       // map
       map: '',
+      markers: [],
       mapOptions: {
         center: '',
         level: ''
@@ -83,20 +84,36 @@ export default {
       this.map = new kakao.maps.Map(container, this.mapOptions)
     },
     keywordSearch () {
+      this.setMarkers(null)
+      const places = new kakao.maps.services.Places()
       const callback = (res, status) => {
         const resStatus = kakao.maps.services.Status
         if (status === resStatus.OK) {
           this.resSearch = res
-          showToast('success', res.length + ' 건의 검색결과가 있습니다.')
+          for (let i = 0; i < res.length; i++) {
+            this.displayMarker(res[i])
+          }
+          showToast('success', `${res.length} 건의 검색결과가 있습니다.`)
         } else if (status === resStatus.ZERO_RESULT) {
           showToast('warning', '검색 결과가 없습니다.')
         } else if (status === resStatus.ERROR) {
           showToast('danger', '서버 응답에 문제가 있습니다.')
         }
       }
-      const places = new kakao.maps.services.Places()
       this.searchOptions.location = this.mapOptions.center
       places.keywordSearch(this.restNm, callback, this.searchOptions)
+    },
+    displayMarker (place) {
+      const marker = new kakao.maps.Marker({
+        position: new kakao.maps.LatLng(place.y, place.x)
+      })
+      marker.setMap(this.map)
+      this.markers.push(marker)
+    },
+    setMarkers (map) {
+      for (let i = 0; i < this.markers.length; i++) {
+        this.markers[i].setMap(map)
+      }
     }
   }
 }
