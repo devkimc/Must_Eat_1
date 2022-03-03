@@ -1,7 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 
-const host = location.protocol + '//' + process.env.R_URL
+const host = `${location.protocol}//${process.env.R_URL}`
 
 // 사용자 에러 처리
 export const axiosPost = (url, params) => {

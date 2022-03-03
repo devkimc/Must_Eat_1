@@ -1,6 +1,4 @@
 <template>
-  <!-- Map-->
-  <div class="indexmap_view">
     <b-card class="card">
       <b-row class="row_input">
         <b-col>
@@ -27,11 +25,10 @@
         </b-col>
       </b-row>
     </b-card>
-    <div id="map"></div>
-  </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { showToast } from '@/plugins/toast'
 
 export default {
@@ -41,58 +38,20 @@ export default {
       // search
       restNm: '',
       searchOptions: {
-        category_group_code: '',
+        category_group_code: 'FD6',
         location: ''
       },
       resSearch: [],
-      resMsgSearch: '',
 
       // map
-      map: '',
-      markers: [],
-      mapOptions: {
-        center: '',
-        level: ''
-      },
-      initLatCdnt: 0,
-      initLngCdnt: 0,
-      latLng: '',
-
-      // api
-      apiKey: '',
-      apiUrl: '',
-      apiServices: ''
+      markers: []
     }
   },
-  created () {
-    this.initLatCdnt = 37.55108043514493
-    this.initLngCdnt = 126.86483931801229
-    this.apiKey = process.env.API_KEY_KAKAO_MAP
-    this.apiUrl = 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey='
-    this.apiServices = '&libraries=services'
-    this.searchOptions.category_group_code = 'FD6'
-  },
-  mounted () {
-    /* global kakao */
-    if (window.kakao && kakao.maps) {
-      this.initMap()
-    } else {
-      const script = document.createElement('script')
-      script.onload = () => kakao.maps.load(this.initMap)
-      script.src = this.apiUrl + this.apiKey + this.apiServices
-      document.head.appendChild(script)
-    }
+  computed: {
+    ...mapGetters(['getMap'])
   },
   methods: {
-    initMap () {
-      const container = document.getElementById('map')
-      this.mapOptions = {
-        center: new kakao.maps.LatLng(this.initLatCdnt, this.initLngCdnt),
-        level: 3
-      }
-      this.map = new kakao.maps.Map(container, this.mapOptions)
-    },
-
+    /* global kakao */
     keywordSearch () {
       this.hideMarker()
       const places = new kakao.maps.services.Places()
@@ -111,7 +70,6 @@ export default {
           showToast('danger', '서버 응답에 문제가 있습니다.')
         }
       }
-      this.searchOptions.location = this.mapOptions.center
       places.keywordSearch(this.restNm, callback, this.searchOptions)
     },
 
@@ -119,7 +77,7 @@ export default {
       const marker = new kakao.maps.Marker({
         position: new kakao.maps.LatLng(place.y, place.x)
       })
-      marker.setMap(this.map)
+      marker.setMap(this.getMap)
       this.markers.push(marker)
     },
 
@@ -130,7 +88,7 @@ export default {
     },
 
     setCenter (index) {
-      this.map.setCenter(new kakao.maps.LatLng(this.resSearch[index].y, this.resSearch[index].x))
+      this.getMap.setCenter(new kakao.maps.LatLng(this.resSearch[index].y, this.resSearch[index].x))
     }
   }
 }
