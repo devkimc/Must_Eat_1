@@ -30,7 +30,6 @@
 <script>
 import { mapGetters } from 'vuex'
 import { showToast } from '@/plugins/toast'
-import { getRestInfo } from '@/api/map'
 
 export default {
   name: 'IndexMap',
@@ -101,10 +100,6 @@ export default {
 
     clickMarker (marker, place) {
       kakao.maps.event.addListener(marker, 'click', () => {
-        getRestInfo(place.id).then(res => {
-          console.log(res)
-          console.log(res.data.comment.scoresum)
-        })
       })
     }
   }

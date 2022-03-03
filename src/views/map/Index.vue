@@ -1,8 +1,8 @@
 <template>
   <!-- Map-->
   <div class="indexmap_view">
-    <search-component></search-component>
     <map-component></map-component>
+    <search-component></search-component>
   </div>
 </template>
 
