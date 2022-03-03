@@ -10,12 +10,12 @@ const store = new Vuex.Store({
     map: ''
   },
   getters: {
-    getMap (state) {
+    getInitMap (state) {
       return state.map
     }
   },
   mutations: {
-    setMap (state, data) {
+    setInitMap (state, data) {
       state.map = data
     }
   },

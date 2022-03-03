@@ -35,7 +35,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['setMap']),
+    ...mapMutations(['setInitMap']),
 
     initMap () {
       const container = document.getElementById('map')
@@ -44,7 +44,7 @@ export default {
         level: 2
       }
       const map = new kakao.maps.Map(container, this.mapOptions)
-      this.setMap(map)
+      this.setInitMap(map)
     }
   }
 }

@@ -30,6 +30,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { showToast } from '@/plugins/toast'
+import { getRestInfo } from '@/api/map'
 
 export default {
   name: 'IndexMap',
@@ -44,11 +45,12 @@ export default {
       resSearch: [],
 
       // map
+      marker: {},
       markers: []
     }
   },
   computed: {
-    ...mapGetters(['getMap'])
+    ...mapGetters(['getInitMap'])
   },
   methods: {
     /* global kakao */
@@ -75,9 +77,11 @@ export default {
 
     showMarker (place) {
       const marker = new kakao.maps.Marker({
-        position: new kakao.maps.LatLng(place.y, place.x)
+        position: new kakao.maps.LatLng(place.y, place.x),
+        clickable: true
       })
-      marker.setMap(this.getMap)
+      marker.setMap(this.getInitMap)
+      this.clickMarker(marker, place)
       this.markers.push(marker)
     },
 
@@ -88,7 +92,20 @@ export default {
     },
 
     setCenter (index) {
-      this.getMap.setCenter(new kakao.maps.LatLng(this.resSearch[index].y, this.resSearch[index].x))
+      this.getInitMap.setCenter(
+        new kakao.maps.LatLng(
+          this.resSearch[index].y,
+          this.resSearch[index].x
+        ))
+    },
+
+    clickMarker (marker, place) {
+      kakao.maps.event.addListener(marker, 'click', () => {
+        getRestInfo(place.id).then(res => {
+          console.log(res)
+          console.log(res.data.comment.scoresum)
+        })
+      })
     }
   }
 }
