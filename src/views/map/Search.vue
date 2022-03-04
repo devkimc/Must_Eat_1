@@ -2,12 +2,12 @@
     <b-card class="card">
       <b-row class="row_input">
         <b-col>
-          <b-form-input placeholder='식당 이름' v-model="restNm"></b-form-input>
-        </b-col>
-      </b-row>
-      <b-row class="row_button">
-        <b-col>
-          <b-button block variant="primary" @click="keywordSearch()">검색하기</b-button>
+          <b-input-group class="mb-2">
+            <b-form-input placeholder='식당 이름' v-model="restNm" @keyup.enter="keywordSearch()"></b-form-input>
+            <b-input-group-prepend is-text @click="keywordSearch()">
+              <b-icon icon="search"></b-icon>
+            </b-input-group-prepend>
+          </b-input-group>
         </b-col>
       </b-row>
       <search-result-component :res-search="resSearch" @set-center="setCenter" >

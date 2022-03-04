@@ -1,6 +1,6 @@
 <template>
   <div class='layout_nav'>
-    <b-nav tabs align='right'>
+    <b-nav tabs align='right' style="padding-top:15px;padding-bottom:15px">
       <b-nav-item href="/">Home</b-nav-item>
       <b-nav-item href="/auth/login">Login</b-nav-item>
       <b-nav-item href="/map/index">Map</b-nav-item>
