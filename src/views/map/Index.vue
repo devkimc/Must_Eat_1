@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import MapComponent from './Map.vue'
-import SearchComponent from './Search.vue'
+import MapComponent from './Map'
+import SearchComponent from './Search'
 
 export default {
   name: 'MapIndex',

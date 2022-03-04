@@ -10,29 +10,18 @@
           <b-button block variant="primary" @click="keywordSearch()">검색하기</b-button>
         </b-col>
       </b-row>
-      <b-row v-if="resSearch.length !== 0" class="row_list_group">
-        <b-col>
-          <b-list-group v-for="(item, index) in resSearch" :key="index">
-            <b-list-group-item button @click="setCenter(index)">
-              <h5>
-                {{item.place_name}}
-              </h5>
-              <p>
-                {{item.address_name}}
-              </p>
-            </b-list-group-item>
-          </b-list-group>
-        </b-col>
-      </b-row>
+      <search-result-component :res-search="resSearch" @set-center="setCenter" >
+      </search-result-component>
     </b-card>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import { showToast } from '@/plugins/toast'
+import SearchResultComponent from './SearchResult'
 
 export default {
-  name: 'IndexMap',
+  name: 'Search',
   data () {
     return {
       // search
@@ -45,8 +34,14 @@ export default {
 
       // map
       marker: {},
-      markers: []
+      markers: [],
+
+      // modal
+      showModal: false
     }
+  },
+  components: {
+    SearchResultComponent
   },
   computed: {
     ...mapGetters(['getInitMap'])
@@ -100,6 +95,8 @@ export default {
 
     clickMarker (marker, place) {
       kakao.maps.event.addListener(marker, 'click', () => {
+        this.showModal = true
+        console.log('this.showModal: ' + this.showModal)
       })
     }
   }
