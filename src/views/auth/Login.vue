@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { Login } from '@/api/auth'
+import { login } from '@/api/auth'
 import { showToast } from '@/plugins/toast'
 
 export default {
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     goLogin () {
-      Login(this.userId, this.userPw).then(res => {
+      login(this.userId, this.userPw).then(res => {
         if (res.data.code === 10000) {
           showToast('success', res.data.msg)
         } else if (res.data.code === 20001) {

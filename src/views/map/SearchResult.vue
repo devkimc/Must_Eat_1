@@ -29,14 +29,14 @@
             카테고리를 선택해주세요.
           </p>
           <nav class="mb-3">
-            <b-nav vertical v-for="(item, index) in foodTp" :key="index">
+            <b-nav vertical v-for="(item, index) in restCategory" :key="index">
               <b-nav-item active @click="hide">
                 <b-row>
                   <b-col cols="1">
                     <b-icon icon="house" font-scale="1"></b-icon>
                   </b-col>
                   <b-col>
-                    {{item.foodCategory}}
+                    {{item.restTp}}
                   </b-col>
                 </b-row>
               </b-nav-item>
@@ -54,7 +54,10 @@
     </b-sidebar>
   </b-row>
 </template>
+
 <script>
+import { procFavRest } from '@/api/favRest'
+import { showToast } from '@/plugins/toast'
 
 export default {
   name: 'SearchResult',
@@ -69,38 +72,38 @@ export default {
   data () {
     return {
       favRest: '',
-      foodTp: [
+      restCategory: [
         {
-          foodCd: '01',
-          foodCategory: '한식'
+          restCd: '01',
+          restTp: '한식'
         },
         {
-          foodCd: '02',
-          foodCategory: '양식'
+          restCd: '02',
+          restTp: '양식'
         },
         {
-          foodCd: '03',
-          foodCategory: '중식'
+          restCd: '03',
+          restTp: '중식'
         },
         {
-          foodCd: '04',
-          foodCategory: '일식'
+          restCd: '04',
+          restTp: '일식'
         },
         {
-          foodCd: '05',
-          foodCategory: '분식'
+          restCd: '05',
+          restTp: '분식'
         },
         {
-          foodCd: '06',
-          foodCategory: '아시안'
+          restCd: '06',
+          restTp: '아시안'
         },
         {
-          foodCd: '07',
-          foodCategory: '카페·디저트'
+          restCd: '07',
+          restTp: '카페·디저트'
         },
         {
-          foodCd: '08',
-          foodCategory: '기타'
+          restCd: '08',
+          restTp: '기타'
         }
       ]
     }
@@ -111,6 +114,16 @@ export default {
     },
     setRest (rest) {
       this.favRest = rest
+    },
+    setProcFavRest () {
+      procFavRest(this.restId, this.restNm, this.addr, this.latCdnt, this.lngCdnt,
+        this.userId, this.restTp, this.favMenu, this.favRestYn).then(res => {
+        if (res.data.code === 10000) {
+          showToast('success', res.data.msg)
+        } else {
+          showToast('warning', res.data.msg)
+        }
+      })
     }
   }
 }

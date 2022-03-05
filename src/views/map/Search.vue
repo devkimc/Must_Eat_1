@@ -3,7 +3,8 @@
       <b-row class="row_input">
         <b-col>
           <b-input-group class="mb-2">
-            <b-form-input placeholder='식당 이름' v-model="restNm" @keyup.enter="keywordSearch()"></b-form-input>
+            <b-form-input placeholder='식당 이름' v-model="restNm" @keyup.enter="keywordSearch()">
+            </b-form-input>
             <b-input-group-prepend is-text @click="keywordSearch()">
               <b-icon icon="search"></b-icon>
             </b-input-group-prepend>
