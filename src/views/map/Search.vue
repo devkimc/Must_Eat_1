@@ -11,7 +11,9 @@
           </b-input-group>
         </b-col>
       </b-row>
-      <search-result-component :res-search="resSearch" @set-center="setCenter" >
+      <search-result-component
+        :res-search-detail="resSearchDetail"
+        @set-center="setCenter" >
       </search-result-component>
     </b-card>
 </template>
@@ -19,6 +21,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { showToast } from '@/plugins/toast'
+import { getKakaoPlaceInfo } from '@/api/kakao'
 import SearchResultComponent from './SearchResult'
 
 export default {
@@ -29,9 +32,12 @@ export default {
       restNm: '',
       searchOptions: {
         category_group_code: 'FD6',
-        location: ''
+        x: 126.86483931801229,
+        y: 37.55108043514493
       },
       resSearch: [],
+      resSearchDetail: [],
+      rate: 0,
 
       // map
       marker: {},
@@ -50,7 +56,10 @@ export default {
   methods: {
     /* global kakao */
     keywordSearch () {
+      // init
       this.hideMarker()
+      this.resSearchDetail = []
+
       const places = new kakao.maps.services.Places()
       const callback = (res, status) => {
         const resStatus = kakao.maps.services.Status
@@ -59,6 +68,7 @@ export default {
           this.setCenter(0)
           for (let i = 0; i < res.length; i++) {
             this.showMarker(res[i])
+            this.getPlaceDetail(res[i], i)
           }
           showToast('success', `${res.length} 건의 검색결과가 있습니다.`)
         } else if (status === resStatus.ZERO_RESULT) {
@@ -76,7 +86,6 @@ export default {
         clickable: true
       })
       marker.setMap(this.getInitMap)
-      this.clickMarker(marker, place)
       this.markers.push(marker)
     },
 
@@ -94,11 +103,23 @@ export default {
         ))
     },
 
-    clickMarker (marker, place) {
-      kakao.maps.event.addListener(marker, 'click', () => {
-        this.showModal = true
-        console.log('this.showModal: ' + this.showModal)
+    getPlaceDetail (place, index) {
+      getKakaoPlaceInfo(place.id).then(res => {
+        if (res.data.code === 30000) {
+          showToast('warning', res.data.msg)
+        } else if (res.data.code === 30001) {
+          this.resSearchDetail.push(res.data.list)
+          this.calcRating(index)
+        } else {
+          showToast('danger', res.data.msg)
+        }
       })
+    },
+
+    calcRating (index) {
+      this.resSearchDetail[index].rate =
+      Number(this.resSearchDetail[index].comment.scoresum) /
+      Number(this.resSearchDetail[index].comment.scorecnt)
     }
   }
 }

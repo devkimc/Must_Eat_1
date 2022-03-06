@@ -1,12 +1,12 @@
 <template>
-  <b-row v-if="resSearch.length !== 0" class="row_list_group">
+  <b-row v-if="resSearchDetail.length !== 0" class="row_list_group">
     <b-col>
-      <b-list-group v-for="(item, index) in resSearch" :key="index">
+      <b-list-group v-for="(item, index) in resSearchDetail" :key="index">
         <b-list-group-item button @click="setCenter(index)" style="margin-bottom: 1%">
           <b-row>
             <b-col cols="10">
               <h6>
-                {{item.place_name}}
+                {{item.basicInfo.placenamefull}}
               </h6>
             </b-col>
             <b-col cols="1">
@@ -15,8 +15,16 @@
           </b-row>
           <b-row style="padding-left: 7%">
             <p style="font-size: 0.8rem">
-              {{item.address_name}}
+              {{item.basicInfo.address.region.fullname}} {{item.basicInfo.address.addrbunho}}
             </p>
+          </b-row>
+          <b-row>
+            <b-col cols="7">
+              <b-form-rating id="rating-sm-no-border" v-model="item.rate" no-border size="sm" variant="warning"></b-form-rating>
+            </b-col>
+            <b-col cols="4">
+              <label for="rating-sm-no-border" style="font-size: 11px">{{item.comment.scorecnt}} 건</label>
+            </b-col>
           </b-row>
         </b-list-group-item>
       </b-list-group>
@@ -62,7 +70,7 @@ import { showToast } from '@/plugins/toast'
 export default {
   name: 'SearchResult',
   props: {
-    resSearch: {
+    resSearchDetail: {
       type: Array,
       default () {
         return []
