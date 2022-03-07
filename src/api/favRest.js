@@ -4,8 +4,8 @@ import { axiosPost } from './config'
  * 즐겨찾기 맛집 조회
  */
  export const getFavRestInfo = (userId) => {
-  return axiosPost('/fav-rest/proc', {
-    USER_ID  : userId
+  return axiosPost('/fav-rest/info', {
+    USER_ID : 'TEST_ID'
   })
 }
 
@@ -21,7 +21,7 @@ export const procFavRest = (restId, restNm, addr, cateId, cateNm, latCdnt, lngCd
     CATE_NM  : cateNm,
     LAT_CDNT : latCdnt,
     LNG_CDNT : lngCdnt,
-    USER_ID  : userId,
-    INS_YN   : insYn
+    USER_ID  : 'TEST_ID',
+    INS_YN   : 'Y'
   })
 }

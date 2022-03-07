@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import { procFavRest } from '@/api/favRest'
-// import { showToast } from '@/plugins/toast'
+import { getFavRestInfo, procFavRest } from '@/api/favRest'
+import { showToast } from '@/plugins/toast'
 
 export default {
   name: 'SearchResult',
@@ -65,6 +65,7 @@ export default {
   methods: {
     setCenter (index) {
       this.$emit('set-center', index)
+      getFavRestInfo()
     },
     setIndex (index) {
       this.info = this.resSearchDetail[index].basicInfo
@@ -75,22 +76,10 @@ export default {
     },
     setProcFavRest (index) {
       this.setIndex(index)
-      console.log(this.info.cid)
-      console.log(this.info.placenamefull)
-      console.log(this.addrNm)
-      console.log(this.info.cateid)
-      console.log(this.info.catename)
-      console.log(this.latCdnt)
-      console.log(this.lngCdnt)
-
       procFavRest(this.info.cid, this.info.placenamefull, this.addrNm,
         this.info.cateid, this.info.catename, this.latCdnt, this.lngCdnt,
         this.userId, this.insYn).then(res => {
-        // if (res.data.code === 10000) {
-        //   showToast('success', res.data.msg)
-        // } else {
-        //   showToast('warning', res.data.msg)
-        // }
+        showToast('success', res.data.msg)
       })
     }
   }
