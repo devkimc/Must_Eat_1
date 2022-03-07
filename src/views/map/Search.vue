@@ -13,6 +13,7 @@
       </b-row>
       <search-result-component
         :res-search-detail="resSearchDetail"
+        :res-search="resSearch"
         @set-center="setCenter" >
       </search-result-component>
     </b-card>
@@ -109,17 +110,10 @@ export default {
           showToast('warning', res.data.msg)
         } else if (res.data.code === 30001) {
           this.resSearchDetail.push(res.data.list)
-          this.calcRating(index)
         } else {
           showToast('danger', res.data.msg)
         }
       })
-    },
-
-    calcRating (index) {
-      this.resSearchDetail[index].rate =
-      Number(this.resSearchDetail[index].comment.scoresum) /
-      Number(this.resSearchDetail[index].comment.scorecnt)
     }
   }
 }

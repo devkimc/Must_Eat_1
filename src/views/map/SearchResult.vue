@@ -10,7 +10,7 @@
               </h6>
             </b-col>
             <b-col cols="1">
-              <b-icon icon="bookmarks" v-b-toggle.sidebar-no-header @click="setRest(item.place_name)"></b-icon>
+              <b-icon icon="bookmarks" @click="setProcFavRest(index)"></b-icon>
             </b-col>
           </b-row>
           <b-row style="padding-left: 7%">
@@ -20,7 +20,7 @@
           </b-row>
           <b-row>
             <b-col cols="7">
-              <b-form-rating id="rating-sm-no-border" v-model="item.rate" no-border size="sm" variant="warning"></b-form-rating>
+              <b-form-rating id="rating-sm-no-border" value="4" no-border size="sm" variant="warning"></b-form-rating>
             </b-col>
             <b-col cols="4">
               <label for="rating-sm-no-border" style="font-size: 11px">{{item.comment.scorecnt}} 건</label>
@@ -29,43 +29,12 @@
         </b-list-group-item>
       </b-list-group>
     </b-col>
-    <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" right shadow>
-      <template #default="{ hide }">
-        <div class="p-3">
-          <h5 id="sidebar-no-header-title">{{favRest}}</h5>
-          <p>
-            카테고리를 선택해주세요.
-          </p>
-          <nav class="mb-3">
-            <b-nav vertical v-for="(item, index) in restCategory" :key="index">
-              <b-nav-item active @click="hide">
-                <b-row>
-                  <b-col cols="1">
-                    <b-icon icon="house" font-scale="1"></b-icon>
-                  </b-col>
-                  <b-col>
-                    {{item.restTp}}
-                  </b-col>
-                </b-row>
-              </b-nav-item>
-            </b-nav>
-          </nav>
-          <b-button variant="outline-primary" block @click="hide">Close Sidebar</b-button>
-        </div>
-      </template>
-    </b-sidebar>
-    <b-sidebar id="sidebar-right" title="맛집 추가하기" right shadow>
-      <div class="px-3 py-2">
-        <b-button variant="primary" block @click="hide">Close Sidebar</b-button>
-        <b-img src="https://picsum.photos/500/500/?image=54" fluid thumbnail></b-img>
-      </div>
-    </b-sidebar>
   </b-row>
 </template>
 
 <script>
 import { procFavRest } from '@/api/favRest'
-import { showToast } from '@/plugins/toast'
+// import { showToast } from '@/plugins/toast'
 
 export default {
   name: 'SearchResult',
@@ -75,62 +44,53 @@ export default {
       default () {
         return []
       }
+    },
+    resSearch: {
+      type: Array,
+      default () {
+        return []
+      }
     }
   },
   data () {
     return {
       favRest: '',
-      restCategory: [
-        {
-          restCd: '01',
-          restTp: '한식'
-        },
-        {
-          restCd: '02',
-          restTp: '양식'
-        },
-        {
-          restCd: '03',
-          restTp: '중식'
-        },
-        {
-          restCd: '04',
-          restTp: '일식'
-        },
-        {
-          restCd: '05',
-          restTp: '분식'
-        },
-        {
-          restCd: '06',
-          restTp: '아시안'
-        },
-        {
-          restCd: '07',
-          restTp: '카페·디저트'
-        },
-        {
-          restCd: '08',
-          restTp: '기타'
-        }
-      ]
+      info: {},
+      comment: {},
+      addrNm: '',
+      latCdnt: 0,
+      lngCdnt: 0
     }
   },
   methods: {
     setCenter (index) {
       this.$emit('set-center', index)
     },
-    setRest (rest) {
-      this.favRest = rest
+    setIndex (index) {
+      this.info = this.resSearchDetail[index].basicInfo
+      this.comment = this.resSearchDetail[index].comment
+      this.addrNm = this.resSearch[index].address_name
+      this.latCdnt = this.resSearch[index].y
+      this.lngCdnt = this.resSearch[index].x
     },
-    setProcFavRest () {
-      procFavRest(this.restId, this.restNm, this.addr, this.latCdnt, this.lngCdnt,
-        this.userId, this.restTp, this.favMenu, this.favRestYn).then(res => {
-        if (res.data.code === 10000) {
-          showToast('success', res.data.msg)
-        } else {
-          showToast('warning', res.data.msg)
-        }
+    setProcFavRest (index) {
+      this.setIndex(index)
+      console.log(this.info.cid)
+      console.log(this.info.placenamefull)
+      console.log(this.addrNm)
+      console.log(this.info.cateid)
+      console.log(this.info.catename)
+      console.log(this.latCdnt)
+      console.log(this.lngCdnt)
+
+      procFavRest(this.info.cid, this.info.placenamefull, this.addrNm,
+        this.info.cateid, this.info.catename, this.latCdnt, this.lngCdnt,
+        this.userId, this.favRestYn).then(res => {
+        // if (res.data.code === 10000) {
+        //   showToast('success', res.data.msg)
+        // } else {
+        //   showToast('warning', res.data.msg)
+        // }
       })
     }
   }
