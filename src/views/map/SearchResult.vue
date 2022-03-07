@@ -85,7 +85,7 @@ export default {
 
       procFavRest(this.info.cid, this.info.placenamefull, this.addrNm,
         this.info.cateid, this.info.catename, this.latCdnt, this.lngCdnt,
-        this.userId, this.favRestYn).then(res => {
+        this.userId, this.insYn).then(res => {
         // if (res.data.code === 10000) {
         //   showToast('success', res.data.msg)
         // } else {
