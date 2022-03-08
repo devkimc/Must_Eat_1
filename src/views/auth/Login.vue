@@ -27,7 +27,6 @@
 
 <script>
 import { login } from '@/api/auth'
-import { getFavRestInfo } from '@/api/favRest'
 import { showToast } from '@/plugins/toast'
 
 export default {
@@ -45,18 +44,8 @@ export default {
           showToast('danger', res.data.msg)
         } else if (res.data.code === 20001) {
           localStorage.setItem('jwt', res.data.token)
-          this.getFavRestInfo(res)
           showToast('success', res.data.msg)
         } else {
-          showToast('warning', res.data.msg)
-        }
-      })
-    },
-    getFavRestInfo () {
-      getFavRestInfo(this.userId).then(res => {
-        if (res.data.code === 10001) {
-          localStorage.setItem('favRest', res.data.list)
-        } else if (res.data.code !== 40000 && res.data.code !== 10001) {
           showToast('warning', res.data.msg)
         }
       })

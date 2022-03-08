@@ -33,13 +33,21 @@
 </template>
 
 <script>
-import { getFavRestInfo, procFavRest } from '@/api/favRest'
+import { mapGetters } from 'vuex'
+import { checkToken } from '@/api/auth'
+import { procFavRest } from '@/api/favRest'
 import { showToast } from '@/plugins/toast'
 
 export default {
   name: 'SearchResult',
   props: {
     resSearchDetail: {
+      type: Array,
+      default () {
+        return []
+      }
+    },
+    resSearchRestId: {
       type: Array,
       default () {
         return []
@@ -62,10 +70,19 @@ export default {
       lngCdnt: 0
     }
   },
+  computed: {
+    ...mapGetters(['getFavRest'])
+  },
+  watch: {
+    resSearchRestId: (newValue, oldValue) => {
+      console.log('newValue: ' + newValue)
+      const found = this.resSearchRestId.find(id => id === '1968272068')
+      console.log('found: ' + found)
+    }
+  },
   methods: {
     setCenter (index) {
       this.$emit('set-center', index)
-      getFavRestInfo()
     },
     setIndex (index) {
       this.info = this.resSearchDetail[index].basicInfo
@@ -75,11 +92,17 @@ export default {
       this.lngCdnt = this.resSearch[index].x
     },
     setProcFavRest (index) {
-      this.setIndex(index)
-      procFavRest(this.info.cid, this.info.placenamefull, this.addrNm,
-        this.info.cateid, this.info.catename, this.latCdnt, this.lngCdnt,
-        this.userId, this.insYn).then(res => {
-        showToast('success', res.data.msg)
+      checkToken().then(res => {
+        if (res.data.code === 10000) {
+          this.setIndex(index)
+          procFavRest(this.info.cid, this.info.placenamefull, this.addrNm,
+            this.info.cateid, this.info.catename, this.latCdnt, this.lngCdnt,
+            this.userId, this.insYn).then(res => {
+            showToast('success', res.data.msg)
+          })
+        } else {
+          showToast('danger', res.data.msg)
+        }
       })
     }
   }

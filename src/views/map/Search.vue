@@ -13,6 +13,7 @@
       </b-row>
       <search-result-component
         :res-search-detail="resSearchDetail"
+        :res-search-rest-id="resSearchRestId"
         :res-search="resSearch"
         @set-center="setCenter" >
       </search-result-component>
@@ -38,7 +39,7 @@ export default {
       },
       resSearch: [],
       resSearchDetail: [],
-      rate: 0,
+      resSearchRestId: [],
 
       // map
       marker: {},
@@ -59,7 +60,9 @@ export default {
     keywordSearch () {
       // init
       this.hideMarker()
+      this.markers = []
       this.resSearchDetail = []
+      this.resSearchRestId = []
 
       const places = new kakao.maps.services.Places()
       const callback = (res, status) => {
@@ -69,7 +72,8 @@ export default {
           this.setCenter(0)
           for (let i = 0; i < res.length; i++) {
             this.showMarker(res[i])
-            this.getPlaceDetail(res[i], i)
+            this.getPlaceDetail(res[i])
+            this.resSearchRestId.push(res[i].id)
           }
           showToast('success', `${res.length} 건의 검색결과가 있습니다.`)
         } else if (status === resStatus.ZERO_RESULT) {
