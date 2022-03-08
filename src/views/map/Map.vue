@@ -4,6 +4,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import { checkToken } from '@/api/auth'
 
 export default {
   name: 'KakaoMap',
@@ -38,6 +39,7 @@ export default {
     ...mapMutations(['setInitMap']),
 
     initMap () {
+      checkToken()
       const container = document.getElementById('map')
       this.mapOptions = {
         center: new kakao.maps.LatLng(this.initLatCdnt, this.initLngCdnt),

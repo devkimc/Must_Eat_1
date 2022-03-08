@@ -9,3 +9,17 @@ export const login = (userId, userPw) => {
     USER_PW : userPw
   })
 }
+
+/**
+ * 토큰 유효성 검사
+ */
+export const checkToken = () => {
+  const token = localStorage.getItem('jwt')
+  return axiosPost('/auth/token', {}, 
+    {
+      headers: {
+        Authorization: token
+      }
+    }
+  )
+}

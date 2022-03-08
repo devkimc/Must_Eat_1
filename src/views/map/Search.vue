@@ -104,11 +104,11 @@ export default {
         ))
     },
 
-    getPlaceDetail (place, index) {
+    getPlaceDetail (place) {
       getKakaoPlaceInfo(place.id).then(res => {
         if (res.data.code === 30000) {
           showToast('warning', res.data.msg)
-        } else if (res.data.code === 30001) {
+        } else if (res.data.code === 10001) {
           this.resSearchDetail.push(res.data.list)
         } else {
           showToast('danger', res.data.msg)
