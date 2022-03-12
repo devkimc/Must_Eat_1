@@ -50,15 +50,7 @@ export default {
   },
   data () {
     return {
-      favRest: '',
-      favRestIndex: [],
-      info: {},
-      comment: {},
-      addrNm: '',
-      latCdnt: 0,
-      lngCdnt: 0,
-      loginYn: false,
-      starRating: 0
+      loginYn: false
     }
   },
   computed: {
@@ -74,8 +66,7 @@ export default {
         if (res.data.code === 10000) {
           const vm = this.resSearch[index]
           procFavRest(vm.id, vm.place_name, vm.address_name,
-            vm.cateId, vm.cateName, vm.x, vm.y,
-            this.userId, this.insYn).then(res => {
+            vm.cateId, vm.cateName, vm.x, vm.y, this.userId, this.insYn).then(res => {
             showToast('success', res.data.msg)
           })
         } else {

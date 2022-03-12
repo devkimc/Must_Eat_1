@@ -108,10 +108,10 @@ export default {
         if (res.data.code === 30000) {
           showToast('warning', res.data.msg)
         } else if (res.data.code === 10001) {
-          this.resSearch[i].cateId = res.data.list.basicInfo.cateid
-          this.resSearch[i].cateName = res.data.list.basicInfo.catename
-          this.resSearch[i].starRating = res.data.list.comment.scoresum / res.data.list.comment.scorecnt
-          this.resSearch[i].scorecnt = res.data.list.comment.scorecnt
+          this.$set(this.resSearch[i], 'cateId', res.data.list.basicInfo.cateid)
+          this.$set(this.resSearch[i], 'cateName', res.data.list.basicInfo.cateName)
+          this.$set(this.resSearch[i], 'starRating', res.data.list.comment.scoresum / res.data.list.comment.scorecnt)
+          this.$set(this.resSearch[i], 'scorecnt', res.data.list.comment.scorecnt)
         } else {
           showToast('danger', res.data.msg)
         }
