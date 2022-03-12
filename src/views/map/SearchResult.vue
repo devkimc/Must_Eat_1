@@ -33,7 +33,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import { checkToken } from '@/api/auth'
 import { procFavRest } from '@/api/favRest'
 import { showToast } from '@/plugins/toast'
@@ -52,9 +51,6 @@ export default {
     return {
       loginYn: false
     }
-  },
-  computed: {
-    ...mapGetters(['getFavRest'])
   },
   methods: {
     setCenter (index) {

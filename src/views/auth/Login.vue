@@ -26,7 +26,9 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import { login } from '@/api/auth'
+import { getFavRestInfo } from '@/api/favRest'
 import { showToast } from '@/plugins/toast'
 
 export default {
@@ -38,14 +40,27 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['setFavRest']),
+
     goLogin () {
       login(this.userId, this.userPw).then(res => {
         if (res.data.code === 20000) {
           showToast('danger', res.data.msg)
         } else if (res.data.code === 20001) {
           localStorage.setItem('jwt', res.data.token)
+          this.getFavRestInfo()
           showToast('success', res.data.msg)
         } else {
+          showToast('warning', res.data.msg)
+        }
+      })
+    },
+
+    getFavRestInfo () {
+      getFavRestInfo(this.userId).then(res => {
+        if (res.data.code === 10001) {
+          this.setFavRest(res.data.list)
+        } else if (res.data.code !== 40000 && res.data.code !== 10001) {
           showToast('warning', res.data.msg)
         }
       })
