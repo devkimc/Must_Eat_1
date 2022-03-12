@@ -12,7 +12,7 @@
         </b-row>
         <b-row class="row_input">
           <b-col>
-            <b-form-input placeholder='비밀번호' v-model="userPw"></b-form-input>
+            <b-form-input placeholder='비밀번호' v-model="userPw" @keyup.enter="goLogin"></b-form-input>
           </b-col>
         </b-row>
         <b-row class="row_button">

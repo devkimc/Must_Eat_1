@@ -1,12 +1,12 @@
 <template>
-  <b-row v-if="resSearchDetail.length !== 0" class="row_list_group">
+  <b-row v-if="resSearch.length !== 0" class="row_list_group">
     <b-col>
-      <b-list-group v-for="(item, index) in resSearchDetail" :key="index">
+      <b-list-group v-for="(item, index) in resSearch" :key="index">
         <b-list-group-item button @click="setCenter(index)" style="margin-bottom: 1%">
           <b-row>
             <b-col cols="10">
               <h6>
-                {{item.basicInfo.placenamefull}}
+                {{item.place_name}}
               </h6>
             </b-col>
             <b-col cols="1">
@@ -15,15 +15,15 @@
           </b-row>
           <b-row style="padding-left: 7%">
             <p style="font-size: 0.8rem">
-              {{item.basicInfo.address.region.fullname}} {{item.basicInfo.address.addrbunho}}
+              {{item.address_name}}
             </p>
           </b-row>
           <b-row>
             <b-col cols="7">
-              <b-form-rating id="rating-sm-no-border" value="4" no-border size="sm" variant="warning"></b-form-rating>
+              <b-form-rating id="rating-sm-no-border" v-model="item.starRating" no-border size="sm" variant="warning"></b-form-rating>
             </b-col>
             <b-col cols="4">
-              <label for="rating-sm-no-border" style="font-size: 11px">{{item.comment.scorecnt}} 건</label>
+              <label for="rating-sm-no-border" style="font-size: 11px">{{item.scorecnt}} 건</label>
             </b-col>
           </b-row>
         </b-list-group-item>
@@ -41,18 +41,6 @@ import { showToast } from '@/plugins/toast'
 export default {
   name: 'SearchResult',
   props: {
-    resSearchDetail: {
-      type: Array,
-      default () {
-        return []
-      }
-    },
-    resSearchRestId: {
-      type: Array,
-      default () {
-        return []
-      }
-    },
     resSearch: {
       type: Array,
       default () {
@@ -63,40 +51,30 @@ export default {
   data () {
     return {
       favRest: '',
+      favRestIndex: [],
       info: {},
       comment: {},
       addrNm: '',
       latCdnt: 0,
-      lngCdnt: 0
+      lngCdnt: 0,
+      loginYn: false,
+      starRating: 0
     }
   },
   computed: {
     ...mapGetters(['getFavRest'])
   },
-  watch: {
-    resSearchRestId: (newValue, oldValue) => {
-      console.log('newValue: ' + newValue)
-      const found = this.resSearchRestId.find(id => id === '1968272068')
-      console.log('found: ' + found)
-    }
-  },
   methods: {
     setCenter (index) {
       this.$emit('set-center', index)
     },
-    setIndex (index) {
-      this.info = this.resSearchDetail[index].basicInfo
-      this.comment = this.resSearchDetail[index].comment
-      this.addrNm = this.resSearch[index].address_name
-      this.latCdnt = this.resSearch[index].y
-      this.lngCdnt = this.resSearch[index].x
-    },
+
     setProcFavRest (index) {
       checkToken().then(res => {
         if (res.data.code === 10000) {
-          this.setIndex(index)
-          procFavRest(this.info.cid, this.info.placenamefull, this.addrNm,
-            this.info.cateid, this.info.catename, this.latCdnt, this.lngCdnt,
+          const vm = this.resSearch[index]
+          procFavRest(vm.id, vm.place_name, vm.address_name,
+            vm.cateId, vm.cateName, vm.x, vm.y,
             this.userId, this.insYn).then(res => {
             showToast('success', res.data.msg)
           })

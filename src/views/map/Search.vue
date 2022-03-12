@@ -12,8 +12,6 @@
         </b-col>
       </b-row>
       <search-result-component
-        :res-search-detail="resSearchDetail"
-        :res-search-rest-id="resSearchRestId"
         :res-search="resSearch"
         @set-center="setCenter" >
       </search-result-component>
@@ -38,8 +36,6 @@ export default {
         y: 37.55108043514493
       },
       resSearch: [],
-      resSearchDetail: [],
-      resSearchRestId: [],
 
       // map
       marker: {},
@@ -72,8 +68,7 @@ export default {
           this.setCenter(0)
           for (let i = 0; i < res.length; i++) {
             this.showMarker(res[i])
-            this.getPlaceDetail(res[i])
-            this.resSearchRestId.push(res[i].id)
+            this.getPlaceDetail(res[i], i)
           }
           showToast('success', `${res.length} 건의 검색결과가 있습니다.`)
         } else if (status === resStatus.ZERO_RESULT) {
@@ -108,12 +103,15 @@ export default {
         ))
     },
 
-    getPlaceDetail (place) {
+    getPlaceDetail (place, i) {
       getKakaoPlaceInfo(place.id).then(res => {
         if (res.data.code === 30000) {
           showToast('warning', res.data.msg)
         } else if (res.data.code === 10001) {
-          this.resSearchDetail.push(res.data.list)
+          this.resSearch[i].cateId = res.data.list.basicInfo.cateid
+          this.resSearch[i].cateName = res.data.list.basicInfo.catename
+          this.resSearch[i].starRating = res.data.list.comment.scoresum / res.data.list.comment.scorecnt
+          this.resSearch[i].scorecnt = res.data.list.comment.scorecnt
         } else {
           showToast('danger', res.data.msg)
         }
