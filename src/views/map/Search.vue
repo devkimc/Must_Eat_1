@@ -79,12 +79,7 @@ export default {
         this.setCenter(0)
         for (let i = 0; i < res.length; i++) {
           if (this.loginYn && this.getFavRest.length !== 0) {
-            this.$set(this.resSearch[i], 'favRestYn', this.favRestId.includes(parseInt(res[i].id)))
-            console.log('this.favRestId: ' + this.favRestId)
-            console.log('typeof this.favRestId[0]: ' + typeof (this.favRestId[0]))
-            console.log('this.favRestId.includes(res[i].id): ' + this.favRestId.includes(parseInt(res[i].id)))
-            console.log('res[i].id: ' + res[i].id)
-            console.log('typeof parseInt(res[i].id): ' + typeof (parseInt(res[i].id)))
+            this.$set(this.resSearch[i], 'isFavRest', this.favRestId.includes(parseInt(res[i].id)))
           }
           this.showMarker(res[i])
           this.getPlaceDetail(res[i], i)
@@ -151,10 +146,8 @@ export default {
           this.loginYn = true
           if (this.getFavRest.length !== 0) {
             this.setFavRestId()
-            console.log('this.favRestId.length: ' + this.favRestId.length)
           }
         }
-        console.log('loginYn: ' + this.loginYn)
       })
     }
   }

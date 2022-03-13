@@ -10,7 +10,7 @@
               </h6>
             </b-col>
             <b-col cols="1">
-              <b-icon v-if="item.favRestYn" icon="bookmarks-fill" @click="setProcFavRest(index)"></b-icon>
+              <b-icon v-if="item.isFavRest" icon="bookmarks-fill" @click="setProcFavRest(index)"></b-icon>
               <b-icon v-else icon="bookmarks" @click="setProcFavRest(index)"></b-icon>
             </b-col>
           </b-row>
@@ -50,7 +50,8 @@ export default {
   },
   data () {
     return {
-      loginYn: false
+      loginYn: false,
+      insYn: ''
     }
   },
   methods: {
@@ -62,9 +63,15 @@ export default {
       checkToken().then(res => {
         if (res.data.code === 10000) {
           const vm = this.resSearch[index]
+          if (vm.isFavRest) {
+            this.insYn = 'N'
+          } else {
+            this.insYn = 'Y'
+          }
           procFavRest(vm.id, vm.place_name, vm.address_name,
             vm.cateId, vm.cateName, vm.x, vm.y, this.userId, this.insYn).then(res => {
             showToast('success', res.data.msg)
+            this.$set(vm, 'isFavRest', this.insYn === 'N' ? 'false' : true)
           })
         } else {
           showToast('danger', res.data.msg)

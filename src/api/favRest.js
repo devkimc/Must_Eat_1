@@ -22,6 +22,6 @@ export const procFavRest = (restId, restNm, addr, cateId, cateNm, latCdnt, lngCd
     LAT_CDNT : latCdnt,
     LNG_CDNT : lngCdnt,
     USER_ID  : 'TEST_ID',
-    INS_YN   : 'Y'
+    INS_YN   : insYn
   })
 }
