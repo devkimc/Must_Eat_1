@@ -10,7 +10,8 @@
               </h6>
             </b-col>
             <b-col cols="1">
-              <b-icon icon="bookmarks" @click="setProcFavRest(index)"></b-icon>
+              <b-icon v-if="item.favRestYn" icon="bookmarks-fill" @click="setProcFavRest(index)"></b-icon>
+              <b-icon v-else icon="bookmarks" @click="setProcFavRest(index)"></b-icon>
             </b-col>
           </b-row>
           <b-row style="padding-left: 7%">
@@ -23,7 +24,7 @@
               <b-form-rating id="rating-sm-no-border" v-model="item.starRating" no-border size="sm" variant="warning"></b-form-rating>
             </b-col>
             <b-col cols="4">
-              <label for="rating-sm-no-border" style="font-size: 11px">{{item.scorecnt}} 건</label>
+              <label for="rating-sm-no-border" style="font-size: 11px">{{item.scoreCnt}} 건</label>
             </b-col>
           </b-row>
         </b-list-group-item>
