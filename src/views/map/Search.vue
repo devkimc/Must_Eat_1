@@ -21,7 +21,6 @@
 <script>
 import { mapGetters } from 'vuex'
 import { showToast } from '@/plugins/toast'
-import { checkToken } from '@/api/auth'
 import { getKakaoPlaceInfo } from '@/api/kakao'
 import SearchResultComponent from './SearchResult'
 
@@ -56,10 +55,7 @@ export default {
     SearchResultComponent
   },
   computed: {
-    ...mapGetters(['getInitMap', 'getFavRest'])
-  },
-  mounted () {
-    this.checkLoginYn()
+    ...mapGetters(['getLoginFlag', 'getInitMap', 'getFavRest'])
   },
   methods: {
     /* global kakao */
@@ -98,16 +94,10 @@ export default {
 
     /* favRest */
     checkFavRest (i) {
-      if (this.loginYn && this.getFavRest.length !== 0) {
+      if (this.getLoginFlag && this.getFavRest.length !== 0) {
         this.$set(this.resSearch[i], 'isFavRest', this.favRestId.includes(parseInt(this.resSearch[i].id)))
       } else {
         this.$set(this.resSearch[i], 'isFavRest', false)
-      }
-    },
-
-    setFavRestId () {
-      for (let i = 0; i < this.getFavRest.length; i++) {
-        this.favRestId.push(this.getFavRest[i].REST_ID)
       }
     },
 
@@ -150,17 +140,6 @@ export default {
           this.resSearch[index].y,
           this.resSearch[index].x
         ))
-    },
-
-    checkLoginYn () {
-      checkToken().then(res => {
-        if (res.data.code === 10000) {
-          this.loginYn = true
-          if (this.getFavRest.length !== 0) {
-            this.setFavRestId()
-          }
-        }
-      })
     }
   }
 }
