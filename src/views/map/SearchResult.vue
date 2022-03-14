@@ -50,7 +50,8 @@ export default {
   },
   data () {
     return {
-      loginYn: false,
+      // favRest
+      isFavRest: '',
       insYn: ''
     }
   },
@@ -63,15 +64,15 @@ export default {
       checkToken().then(res => {
         if (res.data.code === 10000) {
           const vm = this.resSearch[index]
-          if (vm.isFavRest) {
-            this.insYn = 'N'
-          } else {
-            this.insYn = 'Y'
-          }
-          procFavRest(vm.id, vm.place_name, vm.address_name,
-            vm.cateId, vm.cateName, vm.x, vm.y, this.userId, this.insYn).then(res => {
+          // 1. If the search result exits in the bookmark, delete it.
+          // 2. If the search result does not exist in the bookmark, insert it.
+          this.isFavRest = !vm.isFavRest
+          this.insYn = this.isFavRest === true ? 'Y' : 'N'
+
+          procFavRest(vm.id, vm.place_name, vm.address_name, vm.cateId,
+            vm.cateName, vm.x, vm.y, this.userId, this.insYn).then(res => {
+            this.$set(vm, 'isFavRest', this.isFavRest)
             showToast('success', res.data.msg)
-            this.$set(vm, 'isFavRest', this.insYn === 'N' ? 'false' : true)
           })
         } else {
           showToast('danger', res.data.msg)

@@ -77,13 +77,17 @@ export default {
       if (status === resStatus.OK) {
         this.resSearch = res
         this.setCenter(0)
+
+        // Processing search results
         for (let i = 0; i < res.length; i++) {
-          if (this.loginYn && this.getFavRest.length !== 0) {
-            this.$set(this.resSearch[i], 'isFavRest', this.favRestId.includes(parseInt(res[i].id)))
-          }
+          // 1. Check if there's a favotite restaurant.
+          this.checkFavRest(i)
+          // 2. Mark the results on the map.
           this.showMarker(res[i])
+          // 3. Inquire detailed information about the result.
           this.getPlaceDetail(res[i], i)
         }
+
         showToast('success', `${res.length} 건의 검색결과가 있습니다.`)
       } else if (status === resStatus.ZERO_RESULT) {
         showToast('warning', '검색 결과가 없습니다.')
@@ -93,6 +97,14 @@ export default {
     },
 
     /* favRest */
+    checkFavRest (i) {
+      if (this.loginYn && this.getFavRest.length !== 0) {
+        this.$set(this.resSearch[i], 'isFavRest', this.favRestId.includes(parseInt(this.resSearch[i].id)))
+      } else {
+        this.$set(this.resSearch[i], 'isFavRest', false)
+      }
+    },
+
     setFavRestId () {
       for (let i = 0; i < this.getFavRest.length; i++) {
         this.favRestId.push(this.getFavRest[i].REST_ID)
