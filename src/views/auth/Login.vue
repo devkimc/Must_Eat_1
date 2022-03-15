@@ -40,7 +40,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['setFavRest']),
+    ...mapMutations(['setLoginFlag', 'setFavRest']),
 
     goLogin () {
       login(this.userId, this.userPw).then(res => {
@@ -48,7 +48,9 @@ export default {
           showToast('danger', res.data.msg)
         } else if (res.data.code === 20001) {
           localStorage.setItem('jwt', res.data.token)
+          this.setLoginFlag()
           this.getFavRestInfo()
+          this.$router.push('/')
           showToast('success', res.data.msg)
         } else {
           showToast('warning', res.data.msg)
