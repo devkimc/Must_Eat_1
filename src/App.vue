@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import NavView from '@/layouts/Nav'
 
 export default {
@@ -13,6 +14,12 @@ export default {
   name: 'App',
   components: {
     NavView
+  },
+  mounted () {
+    this.setLoginFlag()
+  },
+  methods: {
+    ...mapMutations(['setLoginFlag'])
   }
 }
 </script>

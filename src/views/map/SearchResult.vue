@@ -56,10 +56,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getLoginFlag'])
+    ...mapGetters(['getLoginFlag', 'getResMsgCheckToken'])
   },
   methods: {
-    ...mapMutations(['setLoginFlag', 'getResMsgCheckToken']),
+    ...mapMutations(['setLoginFlag']),
     setCenter (index) {
       this.$emit('set-center', index)
     },

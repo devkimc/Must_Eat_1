@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters } from 'vuex'
 import MapComponent from './Map'
 import SearchComponent from './Search'
 
@@ -18,15 +18,12 @@ export default {
     SearchComponent
   },
   computed: {
-    ...mapGetters(['getFavRest'])
+    ...mapGetters(['getLoginFlag', 'getFavRest'])
   },
   mounted () {
-    this.setLoginFlag()
     this.setFavRestId()
   },
   methods: {
-    ...mapMutations(['setLoginFlag']),
-
     setFavRestId () {
       if (this.getLoginFlag && this.getFavRest.length !== 0) {
         for (let i = 0; i < this.getFavRest.length; i++) {

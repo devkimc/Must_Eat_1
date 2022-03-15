@@ -1,12 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import createPersistedState from 'vuex-persistedstate'
 import { checkToken } from '@/api/auth'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-  plugins: [createPersistedState()],
   state: {
     loginFlag: false,
     resMsgCheckToken: '',
