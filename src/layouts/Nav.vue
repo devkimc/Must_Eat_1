@@ -30,7 +30,7 @@ export default {
 
     logout () {
       localStorage.removeItem('jwt')
-      this.setLoginFlag()
+      this.setLoginFlag(false)
       this.$router.push('/')
     }
   }

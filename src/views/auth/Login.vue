@@ -48,7 +48,7 @@ export default {
           showToast('danger', res.data.msg)
         } else if (res.data.code === 20001) {
           localStorage.setItem('jwt', res.data.token)
-          this.setLoginFlag()
+          this.setLoginFlag(true)
           this.getFavRestInfo()
           this.$router.push('/')
           showToast('success', res.data.msg)

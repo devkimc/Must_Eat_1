@@ -26,7 +26,16 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
-    setLoginFlag (state) {
+    setLoginFlag (state, data) {
+      state.loginFlag = data
+    },
+    setInitMap (state, data) {
+      state.map = data
+    },
+    setFavRest (state, data) {
+      state.FavRest = data
+    },
+    checkToken (state) {
       checkToken().then(res => {
         if (res.data.code === 10000) {
           state.loginFlag = true
@@ -35,12 +44,6 @@ const store = new Vuex.Store({
         }
         state.resMsgCheckToken = res.data.msg
       })
-    },
-    setInitMap (state, data) {
-      state.map = data
-    },
-    setFavRest (state, data) {
-      state.FavRest = data
     }
   },
   actions: {}

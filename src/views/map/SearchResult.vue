@@ -59,13 +59,13 @@ export default {
     ...mapGetters(['getLoginFlag', 'getResMsgCheckToken'])
   },
   methods: {
-    ...mapMutations(['setLoginFlag']),
+    ...mapMutations(['checkToken']),
     setCenter (index) {
       this.$emit('set-center', index)
     },
 
     setProcFavRest (index) {
-      this.setLoginFlag()
+      this.checkToken()
       if (this.getLoginFlag) {
         const vm = this.resSearch[index]
         // 1. If the search result exits in the bookmark, delete it.

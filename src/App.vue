@@ -16,10 +16,10 @@ export default {
     NavView
   },
   mounted () {
-    this.setLoginFlag()
+    this.checkToken()
   },
   methods: {
-    ...mapMutations(['setLoginFlag'])
+    ...mapMutations(['checkToken'])
   }
 }
 </script>
