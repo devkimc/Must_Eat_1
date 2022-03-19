@@ -1,6 +1,6 @@
 <template>
   <div class='layout_nav'>
-    <b-nav tabs align='right' style="padding-top:15px;padding-bottom:15px">
+    <b-nav tabs style="padding-top:15px;padding-bottom:15px">
       <b-nav-item href="/">Home</b-nav-item>
       <b-nav-item v-if="getLoginFlag" @click="logout()">Logout</b-nav-item>
       <b-nav-item v-else href="/auth/login">Login</b-nav-item>

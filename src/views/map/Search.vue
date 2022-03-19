@@ -57,6 +57,9 @@ export default {
   computed: {
     ...mapGetters(['getLoginFlag', 'getInitMap', 'getFavRest'])
   },
+  mounted () {
+    this.setFavRestId()
+  },
   methods: {
     /* global kakao */
 
@@ -92,31 +95,6 @@ export default {
       }
     },
 
-    /* favRest */
-    checkFavRest (i) {
-      if (this.getLoginFlag && this.getFavRest.length !== 0) {
-        this.$set(this.resSearch[i], 'isFavRest', this.favRestId.includes(parseInt(this.resSearch[i].id)))
-      } else {
-        this.$set(this.resSearch[i], 'isFavRest', false)
-      }
-    },
-
-    /* map.place.kakao API */
-    getPlaceDetail (place, i) {
-      getKakaoPlaceInfo(place.id).then(res => {
-        if (res.data.code === 30000) {
-          showToast('warning', res.data.msg)
-        } else if (res.data.code === 10001) {
-          this.$set(this.resSearch[i], 'cateId', res.data.list.basicInfo.cateid)
-          this.$set(this.resSearch[i], 'cateName', res.data.list.basicInfo.catename)
-          this.$set(this.resSearch[i], 'starRating', res.data.list.comment.scoresum / res.data.list.comment.scorecnt)
-          this.$set(this.resSearch[i], 'scoreCnt', res.data.list.comment.scorecnt)
-        } else {
-          showToast('danger', res.data.msg)
-        }
-      })
-    },
-
     /* Marker */
     showMarker (place) {
       const marker = new kakao.maps.Marker({
@@ -140,6 +118,40 @@ export default {
           this.resSearch[index].y,
           this.resSearch[index].x
         ))
+    },
+
+    /* map.place.kakao API */
+    getPlaceDetail (place, i) {
+      getKakaoPlaceInfo(place.id).then(res => {
+        if (res.data.code === 30000) {
+          showToast('warning', res.data.msg)
+        } else if (res.data.code === 10001) {
+          this.$set(this.resSearch[i], 'cateId', res.data.list.basicInfo.cateid)
+          this.$set(this.resSearch[i], 'cateName', res.data.list.basicInfo.catename)
+          this.$set(this.resSearch[i], 'starRating', res.data.list.comment.scoresum / res.data.list.comment.scorecnt)
+          this.$set(this.resSearch[i], 'scoreCnt', res.data.list.comment.scorecnt)
+        } else {
+          showToast('danger', res.data.msg)
+        }
+      })
+    },
+
+    /* favRest */
+    setFavRestId () {
+      if (this.getLoginFlag && this.getFavRest.length !== 0) {
+        console.log('login and favrest')
+        for (let i = 0; i < this.getFavRest.length; i++) {
+          this.favRestId.push(this.getFavRest[i].REST_ID)
+        }
+      }
+    },
+
+    checkFavRest (i) {
+      if (this.getLoginFlag && this.getFavRest.length !== 0) {
+        this.$set(this.resSearch[i], 'isFavRest', this.favRestId.includes(parseInt(this.resSearch[i].id)))
+      } else {
+        this.$set(this.resSearch[i], 'isFavRest', false)
+      }
     }
   }
 }
