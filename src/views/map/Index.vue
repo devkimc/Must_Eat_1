@@ -1,7 +1,9 @@
 <template>
   <!-- Map-->
   <div class="indexmap_view">
-    <search-component></search-component>
+    <search-component
+      :fav-rest-id="favRestId"
+    ></search-component>
     <map-component></map-component>
   </div>
 </template>
@@ -19,8 +21,14 @@ export default {
     MapComponent,
     SearchComponent
   },
+  data () {
+    return {
+      // favRest
+      favRestId: []
+    }
+  },
   computed: {
-    ...mapGetters(['getLoginFlag', 'getFavRest'])
+    ...mapGetters(['getLoginFlag', 'getUserId', 'getFavRest'])
   },
   mounted () {
     if (this.getLoginFlag) {
@@ -31,13 +39,21 @@ export default {
     ...mapMutations(['setFavRest']),
 
     getFavRestInfo () {
-      getFavRestInfo('TEST_ID').then(res => {
+      getFavRestInfo(this.getUserId).then(res => {
         if (res.data.code === 10001) {
           this.setFavRest(res.data.list)
+          // To mark a bookmarks
+          this.setFavRestId()
         } else if (res.data.code !== 40000 && res.data.code !== 10001) {
           showToast('warning', res.data.msg)
         }
       })
+    },
+
+    setFavRestId () {
+      for (let i = 0; i < this.getFavRest.length; i++) {
+        this.favRestId.push(this.getFavRest[i].REST_ID)
+      }
     }
   }
 }

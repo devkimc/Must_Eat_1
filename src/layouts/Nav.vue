@@ -18,19 +18,19 @@ export default {
   data () {
     return {
       width: '500px',
-      path: '',
-      loginFlag: false
+      path: ''
     }
   },
   computed: {
     ...mapGetters(['getLoginFlag'])
   },
   methods: {
-    ...mapMutations(['setLoginFlag']),
+    ...mapMutations(['setLoginFlag', 'setUserId']),
 
     logout () {
       localStorage.removeItem('jwt')
       this.setLoginFlag(false)
+      this.setUserId('')
       this.$router.push('/')
     }
   }

@@ -26,6 +26,14 @@ import SearchResultComponent from './SearchResult'
 
 export default {
   name: 'Search',
+  props: {
+    favRestId: {
+      type: Array,
+      default () {
+        return []
+      }
+    }
+  },
   data () {
     return {
       // search
@@ -45,10 +53,7 @@ export default {
       showModal: false,
 
       // login
-      loginYn: false,
-
-      // favRest
-      favRestId: []
+      loginYn: false
     }
   },
   components: {
@@ -57,16 +62,15 @@ export default {
   computed: {
     ...mapGetters(['getLoginFlag', 'getInitMap', 'getFavRest'])
   },
-  mounted () {
-    this.setFavRestId()
-  },
   methods: {
     /* global kakao */
 
     /* kakao.maps API */
     keywordSearch () {
+      // Init data
       this.hideMarker()
       this.markers = []
+      // Search
       const places = new kakao.maps.services.Places()
       places.keywordSearch(this.restNm, this.keywordSearchCallBack, this.searchOptions)
     },
@@ -134,16 +138,6 @@ export default {
           showToast('danger', res.data.msg)
         }
       })
-    },
-
-    /* favRest */
-    setFavRestId () {
-      if (this.getLoginFlag && this.getFavRest.length !== 0) {
-        console.log('login and favrest')
-        for (let i = 0; i < this.getFavRest.length; i++) {
-          this.favRestId.push(this.getFavRest[i].REST_ID)
-        }
-      }
     },
 
     checkFavRest (i) {

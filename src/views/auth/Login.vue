@@ -39,7 +39,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['setLoginFlag']),
+    ...mapMutations(['setLoginFlag', 'setUserId']),
 
     goLogin () {
       login(this.userId, this.userPw).then(res => {
@@ -48,6 +48,7 @@ export default {
         } else if (res.data.code === 20001) {
           localStorage.setItem('jwt', res.data.token)
           this.setLoginFlag(true)
+          this.setUserId(this.userId)
           this.$router.push('/')
           showToast('success', res.data.msg)
         } else {
