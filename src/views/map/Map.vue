@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'KakaoMap',
@@ -15,13 +15,19 @@ export default {
       apiServices: '&libraries=services',
 
       // map
+      map: '',
       mapOptions: {
         center: '',
         level: ''
       },
       initLatCdnt: 37.55108043514493,
-      initLngCdnt: 126.86483931801229
+      initLngCdnt: 126.86483931801229,
+
+      favImgSrc: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png'
     }
+  },
+  computed: {
+    ...mapGetters(['getFavRest'])
   },
   mounted () {
     /* global kakao */
@@ -41,11 +47,27 @@ export default {
       const container = document.getElementById('map')
       this.mapOptions = {
         center: new kakao.maps.LatLng(this.initLatCdnt, this.initLngCdnt),
-        level: 2
+        level: 5
       }
-      const map = new kakao.maps.Map(container, this.mapOptions)
-      this.setInitMap(map)
+      this.map = new kakao.maps.Map(container, this.mapOptions)
+      this.setInitMap(this.map)
+      this.showFavRestMarker()
+    },
+
+    showFavRestMarker () {
+      for (let i = 0; i < this.getFavRest.length; i++) {
+        const imgSize = new kakao.maps.Size(24, 35)
+        const markerImg = new kakao.maps.MarkerImage(this.favImgSrc, imgSize)
+        const marker = new kakao.maps.Marker({
+          map: this.map,
+          position: new kakao.maps.LatLng(this.getFavRest[i].LNG_CDNT, this.getFavRest[i].LAT_CDNT),
+          title: this.getFavRest[i].REST_NM,
+          image: markerImg
+        })
+        marker.setMap(this.map)
+      }
     }
+
   }
 }
 </script>
