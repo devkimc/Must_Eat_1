@@ -13,8 +13,9 @@
       </b-row>
       <search-result-component
         :res-search="resSearch"
-        @set-center="setCenter" >
-      </search-result-component>
+        @set-center="setCenter"
+        @get-fav-rest-info="getFavRestInfo"
+     ></search-result-component>
     </b-card>
 </template>
 
@@ -138,6 +139,11 @@ export default {
           showToast('danger', res.data.msg)
         }
       })
+    },
+
+    /* FavRest */
+    getFavRestInfo (userId) {
+      this.$emit('get-fav-rest-info', userId)
     },
 
     checkFavRest (i) {

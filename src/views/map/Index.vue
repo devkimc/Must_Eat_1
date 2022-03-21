@@ -3,6 +3,7 @@
   <div class="indexmap_view">
     <search-component
       :fav-rest-id="favRestId"
+      @get-fav-rest-info="getFavRestInfo"
     ></search-component>
     <map-component></map-component>
   </div>

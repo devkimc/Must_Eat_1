@@ -42,6 +42,7 @@ const store = new Vuex.Store({
           state.auth.loginFlag = true
         } else {
           state.auth.loginFlag = false
+          state.auth.userId = ''
         }
         state.resMsgCheckToken = res.data.msg
       })

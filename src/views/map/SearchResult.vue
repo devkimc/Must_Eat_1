@@ -51,17 +51,21 @@ export default {
   data () {
     return {
       // favRest
-      isFavRest: '',
-      insYn: ''
+      isFavRest: ''
     }
   },
   computed: {
-    ...mapGetters(['getLoginFlag', 'getResMsgCheckToken'])
+    ...mapGetters(['getLoginFlag', 'getUserId', 'getResMsgCheckToken'])
   },
   methods: {
     ...mapMutations(['checkToken']),
+
     setCenter (index) {
       this.$emit('set-center', index)
+    },
+
+    getFavRestInfo (userId) {
+      this.$emit('get-fav-rest-info', userId)
     },
 
     setProcFavRest (index) {
@@ -71,11 +75,12 @@ export default {
         // 1. If the search result exits in the bookmark, delete it.
         // 2. If the search result does not exist in the bookmark, insert it.
         this.isFavRest = !vm.isFavRest
-        this.insYn = this.isFavRest === true ? 'Y' : 'N'
+        const insYn = this.isFavRest === true ? 'Y' : 'N'
 
         procFavRest(vm.id, vm.place_name, vm.address_name, vm.cateId,
-          vm.cateName, vm.x, vm.y, this.userId, this.insYn).then(res => {
+          vm.cateName, vm.x, vm.y, this.getUserId, insYn).then(res => {
           this.$set(vm, 'isFavRest', this.isFavRest)
+          this.getFavRestInfo(this.getUserId)
           showToast('success', res.data.msg)
         })
       } else {

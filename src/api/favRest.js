@@ -5,7 +5,7 @@ import { axiosPost } from './config'
  */
  export const getFavRestInfo = (userId) => {
   return axiosPost('/fav-rest/info', {
-    USER_ID : 'TEST_ID'
+    USER_ID : userId
   })
 }
 
@@ -21,7 +21,7 @@ export const procFavRest = (restId, restNm, addr, cateId, cateNm, latCdnt, lngCd
     CATE_NM  : cateNm,
     LAT_CDNT : latCdnt,
     LNG_CDNT : lngCdnt,
-    USER_ID  : 'TEST_ID',
+    USER_ID  : userId,
     INS_YN   : insYn
   })
 }
