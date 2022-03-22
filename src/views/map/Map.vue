@@ -1,12 +1,19 @@
 <template>
-  <div id="map"></div>
+  <div class="map_view">
+    <map-button-component></map-button-component>
+    <div id="map"></div>
+  </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
+import MapButtonComponent from './MapButton'
 
 export default {
   name: 'KakaoMap',
+  components: {
+    MapButtonComponent
+  },
   data () {
     return {
       // api

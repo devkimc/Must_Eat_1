@@ -35,6 +35,9 @@ export default {
       }
     }
   },
+  components: {
+    SearchResultComponent
+  },
   data () {
     return {
       // search
@@ -56,9 +59,6 @@ export default {
       // login
       loginYn: false
     }
-  },
-  components: {
-    SearchResultComponent
   },
   computed: {
     ...mapGetters(['getLoginFlag', 'getInitMap', 'getFavRest'])

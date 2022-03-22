@@ -22,7 +22,11 @@
     display: flex;
 }
 
-.indexmap_view #map {
+.indexmap_view .map_view {
+    width: 100%;
+}
+
+.indexmap_view .map_view #map {
     width: 100%;
     height: 750px;
 }
@@ -36,8 +40,13 @@
     overflow-y: scroll;
 }
 
+.map_button_view {
+    position: absolute;
+    z-index: 1000;
+}
+
 @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
-    .indexmap_view #map {
+    .indexmap_view .map_view #map {
         width: 100%;
         height: 500px;
     }
