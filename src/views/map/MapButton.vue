@@ -1,15 +1,22 @@
 <template>
   <div class="map_button_view">
-    <b-badge pill variant="primary" size="sm">빵집</b-badge>
+    <div v-for="(item, index) in categoryList" :key="index">
+      <b-badge pill variant="primary" size="sm">{{item}}</b-badge>
+    </div>
   </div>
 </template>
 
 <script>
+
 export default {
-  name: 'MapButton'
+  name: 'MapButton',
+  props: {
+    categoryList: {
+      type: Array,
+      default () {
+        return []
+      }
+    }
+  }
 }
 </script>
-
-<style>
-
-</style>

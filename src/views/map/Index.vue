@@ -5,7 +5,9 @@
       :fav-rest-id="favRestId"
       @get-fav-rest-info="getFavRestInfo"
     ></search-component>
-    <map-component></map-component>
+    <map-component
+      :category-list="categoryList"
+    ></map-component>
   </div>
 </template>
 
@@ -24,8 +26,8 @@ export default {
   },
   data () {
     return {
-      // favRest
-      favRestId: []
+      favRestId: [],
+      categoryList: []
     }
   },
   computed: {
@@ -45,6 +47,8 @@ export default {
           this.setFavRest(res.data.list)
           // To mark a bookmarks
           this.setFavRestId()
+          // To show categories
+          this.setCategoryList()
         } else if (res.data.code !== 40000 && res.data.code !== 10001) {
           showToast('warning', res.data.msg)
         }
@@ -54,6 +58,15 @@ export default {
     setFavRestId () {
       for (let i = 0; i < this.getFavRest.length; i++) {
         this.favRestId.push(this.getFavRest[i].REST_ID)
+      }
+    },
+
+    setCategoryList () {
+      console.log('this.getFavRest.lengt: ' + this.getFavRest.length)
+      for (let i = 0; i < this.getFavRest.length; i++) {
+        if (!this.categoryList.includes(this.getFavRest[i].CATE_NM)) {
+          this.categoryList.push(this.getFavRest[i].CATE_NM)
+        }
       }
     }
   }

@@ -1,6 +1,10 @@
 <template>
   <div class="map_view">
-    <map-button-component></map-button-component>
+    <map-button-component
+      v-if="getLoginFlag"
+      :category-list="categoryList"
+    >
+    </map-button-component>
     <div id="map"></div>
   </div>
 </template>
@@ -13,6 +17,14 @@ export default {
   name: 'KakaoMap',
   components: {
     MapButtonComponent
+  },
+  props: {
+    categoryList: {
+      type: Array,
+      default () {
+        return []
+      }
+    }
   },
   data () {
     return {
@@ -34,7 +46,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getFavRest'])
+    ...mapGetters(['getLoginFlag', 'getFavRest'])
   },
   mounted () {
     /* global kakao */
