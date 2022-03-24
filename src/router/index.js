@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/views/Index'
 import Login from '@/views/auth/Login'
-import RegistRest from '@/views/management/RegistRest'
 import MapIndex from '@/views/map/Index'
 
 Vue.use(Router)
@@ -19,11 +18,6 @@ export default new Router({
       path: '/auth/login',
       name: 'Login',
       component: Login
-    },
-    {
-      path: '/management/registrest',
-      name: 'RegistRest',
-      component: RegistRest
     },
     {
       path: '/map/index',

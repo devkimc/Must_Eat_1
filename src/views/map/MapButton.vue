@@ -1,7 +1,8 @@
 <template>
   <div class="map_button_view">
-    <div v-for="(item, index) in categoryList" :key="index">
-      <b-badge pill variant="primary" size="sm">{{item}}</b-badge>
+    <div class="category_list" v-for="(item, index) in categoryList" :key="index">
+      <b-button v-show="index !== 0" variant="primary" size="sm">{{item}}</b-button>
+      <b-button v-show="index === 0" variant="light" size="sm">{{item}}</b-button>
     </div>
   </div>
 </template>

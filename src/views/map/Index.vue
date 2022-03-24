@@ -62,7 +62,9 @@ export default {
     },
 
     setCategoryList () {
-      console.log('this.getFavRest.lengt: ' + this.getFavRest.length)
+      if (this.getFavRest.length !== 0) {
+        this.categoryList.push('전체')
+      }
       for (let i = 0; i < this.getFavRest.length; i++) {
         if (!this.categoryList.includes(this.getFavRest[i].CATE_NM)) {
           this.categoryList.push(this.getFavRest[i].CATE_NM)

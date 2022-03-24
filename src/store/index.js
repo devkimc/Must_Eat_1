@@ -16,8 +16,7 @@ const store = new Vuex.Store({
   state: {
     resMsgCheckToken: '',
     map: '',
-    favRest: [],
-    categoryList: []
+    favRest: []
   },
   getters: {
     getResMsgCheckToken (state) {
@@ -28,9 +27,6 @@ const store = new Vuex.Store({
     },
     getFavRest (state) {
       return state.favRest
-    },
-    getCategoryList (state) {
-      return state.categoryList
     }
   },
   mutations: {
@@ -51,9 +47,6 @@ const store = new Vuex.Store({
         }
         state.resMsgCheckToken = res.data.msg
       })
-    },
-    setCategoryList (state, data) {
-      state.categoryList = data
     }
   },
   actions: {}
