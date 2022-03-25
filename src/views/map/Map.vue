@@ -2,7 +2,8 @@
   <div class="map_view">
     <map-button-component
       v-if="getLoginFlag"
-      :category-list="categoryList"
+      :cate-list="cateList"
+      @show-fav-rest-cate-marker="showFavRestCateMarker"
     >
     </map-button-component>
     <div id="map"></div>
@@ -19,7 +20,7 @@ export default {
     MapButtonComponent
   },
   props: {
-    categoryList: {
+    cateList: {
       type: Array,
       default () {
         return []
@@ -35,12 +36,13 @@ export default {
 
       // map
       map: '',
+      markers: [],
       mapOptions: {
         center: '',
         level: ''
       },
-      initLatCdnt: 37.55108043514493,
-      initLngCdnt: 126.86483931801229,
+      initLatCdnt: 37.5396264,
+      initLngCdnt: 126.9465531,
 
       favImgSrc: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png'
     }
@@ -66,7 +68,7 @@ export default {
       const container = document.getElementById('map')
       this.mapOptions = {
         center: new kakao.maps.LatLng(this.initLatCdnt, this.initLngCdnt),
-        level: 5
+        level: 7
       }
       this.map = new kakao.maps.Map(container, this.mapOptions)
       this.setInitMap(this.map)
@@ -74,6 +76,7 @@ export default {
     },
 
     showFavRestMarker () {
+      this.hideMarker()
       for (let i = 0; i < this.getFavRest.length; i++) {
         const imgSize = new kakao.maps.Size(24, 35)
         const markerImg = new kakao.maps.MarkerImage(this.favImgSrc, imgSize)
@@ -84,9 +87,34 @@ export default {
           image: markerImg
         })
         marker.setMap(this.map)
+        this.markers.push(marker)
+      }
+    },
+
+    showFavRestCateMarker (cate) {
+      console.log('cate: ' + cate)
+      this.hideMarker()
+      for (let i = 0; i < this.getFavRest.length; i++) {
+        if (cate === this.getFavRest[i].CATE_NM) {
+          const imgSize = new kakao.maps.Size(24, 35)
+          const markerImg = new kakao.maps.MarkerImage(this.favImgSrc, imgSize)
+          const marker = new kakao.maps.Marker({
+            map: this.map,
+            position: new kakao.maps.LatLng(this.getFavRest[i].LNG_CDNT, this.getFavRest[i].LAT_CDNT),
+            title: this.getFavRest[i].REST_NM,
+            image: markerImg
+          })
+          marker.setMap(this.map)
+          this.markers.push(marker)
+        }
+      }
+    },
+
+    hideMarker () {
+      for (let i = 0; i < this.markers.length; i++) {
+        this.markers[i].setMap(null)
       }
     }
-
   }
 }
 </script>

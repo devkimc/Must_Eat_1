@@ -6,7 +6,7 @@
       @get-fav-rest-info="getFavRestInfo"
     ></search-component>
     <map-component
-      :category-list="categoryList"
+      :cate-list="cateList"
     ></map-component>
   </div>
 </template>
@@ -27,7 +27,7 @@ export default {
   data () {
     return {
       favRestId: [],
-      categoryList: []
+      cateList: []
     }
   },
   computed: {
@@ -48,7 +48,7 @@ export default {
           // To mark a bookmarks
           this.setFavRestId()
           // To show categories
-          this.setCategoryList()
+          this.setCateList()
         } else if (res.data.code !== 40000 && res.data.code !== 10001) {
           showToast('warning', res.data.msg)
         }
@@ -61,13 +61,13 @@ export default {
       }
     },
 
-    setCategoryList () {
+    setCateList () {
       if (this.getFavRest.length !== 0) {
-        this.categoryList.push('전체')
+        this.cateList.push('전체')
       }
       for (let i = 0; i < this.getFavRest.length; i++) {
-        if (!this.categoryList.includes(this.getFavRest[i].CATE_NM)) {
-          this.categoryList.push(this.getFavRest[i].CATE_NM)
+        if (!this.cateList.includes(this.getFavRest[i].CATE_NM)) {
+          this.cateList.push(this.getFavRest[i].CATE_NM)
         }
       }
     }
