@@ -2,8 +2,8 @@
   <b-row v-if="resSearch.length !== 0" class="row_list_group">
     <b-col>
       <b-list-group v-for="(item, index) in resSearch" :key="index">
-        <b-list-group-item button @click="setCenter(index)" style="margin-bottom: 1%">
-          <b-row>
+        <b-list-group-item button @click="setCenter(index)">
+          <b-row class="header">
             <b-col cols="10">
               <h6>
                 {{item.place_name}}
@@ -14,17 +14,17 @@
               <b-icon v-else icon="bookmarks" @click="setProcFavRest(index)"></b-icon>
             </b-col>
           </b-row>
-          <b-row style="padding-left: 7%">
-            <p style="font-size: 0.8rem">
+          <b-row class="sub">
+            <p>
               {{item.address_name}}
             </p>
           </b-row>
-          <b-row>
-            <b-col cols="7">
+          <b-row class="footer">
+            <b-col cols="7" class="star_rating">
               <b-form-rating id="rating-sm-no-border" v-model="item.starRating" no-border size="sm" variant="warning"></b-form-rating>
             </b-col>
-            <b-col cols="4">
-              <label for="rating-sm-no-border" style="font-size: 11px">{{item.scoreCnt}} 건</label>
+            <b-col cols="4" class="score_cnt">
+              <label for="rating-sm-no-border">{{item.scoreCnt}} 건</label>
             </b-col>
           </b-row>
         </b-list-group-item>

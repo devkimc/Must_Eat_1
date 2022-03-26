@@ -63,6 +63,24 @@
     font-size: 12px;
 }
 
+/* search result */
+.row_list_group .col div button {
+    margin-bottom: 5px;
+}
+
+.row_list_group .col div .sub {
+    padding-left: 7%;
+}
+
+.row_list_group .col div .sub p {
+    font-size: 0.8rem;
+}
+
+.row_list_group .col div .footer .score_cnt label {
+    font-size: 11px;
+}
+
+
 @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
     .indexmap_view .map_view #map {
         width: 100%;
