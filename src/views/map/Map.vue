@@ -3,7 +3,7 @@
     <map-button-component
       v-if="getLoginFlag"
       :cate-list="cateList"
-      @show-fav-rest-cate-marker="showFavRestCateMarker"
+      @show-fav-rest-marker="showFavRestMarker"
     >
     </map-button-component>
     <div id="map"></div>
@@ -72,32 +72,17 @@ export default {
       }
       this.map = new kakao.maps.Map(container, this.mapOptions)
       this.setInitMap(this.map)
-      this.showFavRestMarker()
+      this.showFavRestMarker('전체')
     },
 
-    showFavRestMarker () {
+    showFavRestMarker (cate) {
       this.hideMarker()
-      for (let i = 0; i < this.getFavRest.length; i++) {
-        const imgSize = new kakao.maps.Size(24, 35)
-        const markerImg = new kakao.maps.MarkerImage(this.favImgSrc, imgSize)
-        const marker = new kakao.maps.Marker({
-          map: this.map,
-          position: new kakao.maps.LatLng(this.getFavRest[i].LNG_CDNT, this.getFavRest[i].LAT_CDNT),
-          title: this.getFavRest[i].REST_NM,
-          image: markerImg
-        })
-        marker.setMap(this.map)
-        this.markers.push(marker)
-      }
-    },
+      const imgSize = new kakao.maps.Size(24, 35)
+      const markerImg = new kakao.maps.MarkerImage(this.favImgSrc, imgSize)
 
-    showFavRestCateMarker (cate) {
-      console.log('cate: ' + cate)
-      this.hideMarker()
-      for (let i = 0; i < this.getFavRest.length; i++) {
-        if (cate === this.getFavRest[i].CATE_NM) {
-          const imgSize = new kakao.maps.Size(24, 35)
-          const markerImg = new kakao.maps.MarkerImage(this.favImgSrc, imgSize)
+      // Full search
+      if (cate === '전체') {
+        for (let i = 0; i < this.getFavRest.length; i++) {
           const marker = new kakao.maps.Marker({
             map: this.map,
             position: new kakao.maps.LatLng(this.getFavRest[i].LNG_CDNT, this.getFavRest[i].LAT_CDNT),
@@ -106,6 +91,21 @@ export default {
           })
           marker.setMap(this.map)
           this.markers.push(marker)
+        }
+
+      // Specific search
+      } else {
+        for (let i = 0; i < this.getFavRest.length; i++) {
+          if (cate === this.getFavRest[i].CATE_NM) {
+            const marker = new kakao.maps.Marker({
+              map: this.map,
+              position: new kakao.maps.LatLng(this.getFavRest[i].LNG_CDNT, this.getFavRest[i].LAT_CDNT),
+              title: this.getFavRest[i].REST_NM,
+              image: markerImg
+            })
+            marker.setMap(this.map)
+            this.markers.push(marker)
+          }
         }
       }
     },
