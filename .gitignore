@@ -1,16 +1,19 @@
-.DS_Store
-node_modules/
-/dist/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-/test/unit/coverage/
-.env
+/front/.DS_Store
+/front/node_modules/
+/front/dist/
+/front/npm-debug.log*
+/front/yarn-debug.log*
+/front/yarn-error.log*
+/front/test/unit/coverage/
+/front/.env
 
 # Editor directories and files
-.idea
-.vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
+/front/.idea
+/front/.vscode
+/front/*.suo
+/front/*.ntvs*
+/front/*.njsproj
+/front/*.sln
+
+/back/node_modules/
+/back/server/config/
