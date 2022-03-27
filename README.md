@@ -43,3 +43,14 @@
 >
 # 5. 데모 화면
 
+> **회원가입**
+<img src="https://user-images.githubusercontent.com/63275665/160285550-aa8bbb70-8b84-47eb-a7fa-8dc451019a5f.PNG" width="500" height="250"/>
+
+> **로그인**
+<img src="https://user-images.githubusercontent.com/63275665/160285545-8e9d1601-78cd-4007-8da6-0cb2532c408b.PNG" width="500" height="250"/>
+
+> **검색결과**
+<img src="https://user-images.githubusercontent.com/63275665/160285547-d5a97b24-184e-4a14-a0ac-5e0359e80a67.PNG" width="500" height="250"/>
+
+> **맛집마커 표시**
+<img src="https://user-images.githubusercontent.com/63275665/160285552-7dd29757-2cd2-4fa6-983b-b56cb7f314b0.PNG" width="500" height="250"/>
