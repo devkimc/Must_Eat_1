@@ -31,11 +31,15 @@
 > + 즐겨찾기 식당은 음식 카테고리 별로 확인할 수 있어요
 >
 >
-# 4. 프로젝트 기술 스택
+# 4. 기술 스택
 
 > + **Deployment**: aws ec2, pm2
 > + **Database**: mysql
 > + **Backend**: node.js
 > + **Frontend**: vue.js
+> + **Webserver**: nginx
 > + **Design**: bootstrap
+
 >
+# 5. 데모 화면
+
